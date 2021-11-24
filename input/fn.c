@@ -17,6 +17,8 @@ void addconparam(int a, int b){
     d = a + b;
 }
 
+void addconparam(int,int);
+
 addconparam(2,3);
 
 addconparam(2,Y);

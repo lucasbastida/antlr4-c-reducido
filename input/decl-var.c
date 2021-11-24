@@ -1,3 +1,4 @@
+/* */
 int x;
 double x = y;
 char a, b, c;

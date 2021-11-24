@@ -110,10 +110,10 @@
                 <artifactId>antlr4test-maven-plugin</artifactId>
                 <version>1.19</version>
                 <configuration>
+                    <verbose>true</verbose>
+                    <showTree>true</showTree>
                     <scenarios>
                         <scenario>
-                            <verbose>true</verbose>
-                            <showTree>true</showTree>
                             <entryPoint>s</entryPoint>
                             <grammarName>compiladores</grammarName>
                             <packageName>com.example</packageName>
