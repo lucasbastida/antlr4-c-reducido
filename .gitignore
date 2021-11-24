@@ -31,3 +31,8 @@ buildNumber.properties
 # .antlr folder used by vscode antlr4 grammar syntax plugin
 #
 src/main/antlr4/com/example/.antlr
+
+#
+# C
+#
+*.out

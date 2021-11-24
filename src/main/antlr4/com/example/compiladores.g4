@@ -5,19 +5,44 @@ prog: instructions? EOF;
 instructions: inst+ ;
 
 inst
-    :fnDef
-    |decl
+    :declarations
     |';'
     ;
 
 //https://en.cppreference.com/w/c/language/declarations
-decl: typeSpecifier declList ';';
+declarations
+    : typeDeclaration
+    | function
+    ;
 
-typeSpecifier: INT|DOUBLE|CHAR|VOID;
-declList: declorator (',' declorator)* ;
-declorator: ID ('=' expr)?;
+typeDeclaration: typeSpecifier decloratorList ';' ;
 
-fnDef: typeSpecifier ID '(' ')';
+decloratorList: decloratorInitializer (',' decloratorInitializer)* ;
+
+decloratorInitializer: declorator ('=' expr)?;
+
+function
+    : functionDeclaration
+    | functionDefinition
+    ;
+
+functionDeclaration: typeSpecifier declorator '(' parameterTypeList? ')' ';';
+
+functionDefinition: typeSpecifier declorator '(' parameterList? ')' '{' '}';
+
+parameterTypeList: typeSpecifier declorator? (',' typeSpecifier declorator?)*;
+
+parameterList: typeSpecifier declorator (',' typeSpecifier declorator)*;
+
+
+declorator: ID;
+
+typeSpecifier
+    : INT
+    | DOUBLE
+    | CHAR
+    | VOID
+    ;
 
 expr:   ID '(' exprList? ')'    # Call
     |   expr '[' expr ']'       # Index
