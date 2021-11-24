@@ -4,6 +4,7 @@ Available types:
 - int
 - double
 - char
+- void
 
 
 # References
