@@ -6,8 +6,54 @@ instructions: inst+ ;
 
 inst
     :declarations
+    |statements
     |';'
     ;
+
+statements
+    : compoundStatements
+    | exprStatements
+    | selectionStatements
+    | iterationStatements
+    | jumpStatements
+    ;
+
+jumpStatements
+    : breakStatement
+    | continueStatement
+    | returnStatement
+    ;
+
+returnStatement: 'return' expr? ';';
+
+continueStatement: 'continue' ';';
+
+breakStatement: 'break' ';';
+
+iterationStatements
+    : whileLoop
+    | forLoop
+    ;
+
+forLoop: 'for' '(' initClause ';' expr? ';' expr? ')' statements;
+
+initClause: expr?;
+
+whileLoop: 'while' '(' expr ')' statements;
+
+selectionStatements
+    : 'if' '(' expr ')' statements
+    | 'if' '(' expr ')' statements 'else' statements
+    ;
+
+exprStatements
+    : expr ';'
+    | nullStatement
+    ;
+
+nullStatement: ';';
+
+compoundStatements: '{' (declarations|statements)* '}';
 
 //https://en.cppreference.com/w/c/language/declarations
 declarations
@@ -44,6 +90,7 @@ typeSpecifier
     | VOID
     ;
 
+// TODO comparison operators, prof. pref BNF and not EBNF (keep regex syntax in lexer)
 expr:   ID '(' exprList? ')'    # Call
     |   expr '[' expr ']'       # Index
     |   '-' expr                # Negate
