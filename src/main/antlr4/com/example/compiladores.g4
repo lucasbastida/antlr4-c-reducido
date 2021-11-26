@@ -10,6 +10,7 @@ inst
     |';'
     ;
 
+//https://en.cppreference.com/w/c/language/statements
 statements
     : compoundStatements
     | exprStatements
@@ -74,7 +75,7 @@ function
 
 functionDeclaration: typeSpecifier declorator '(' parameterTypeList? ')' ';';
 
-functionDefinition: typeSpecifier declorator '(' parameterList? ')' '{' '}';
+functionDefinition: typeSpecifier declorator '(' parameterList? ')' '{' statements '}';
 
 parameterTypeList: typeSpecifier declorator? (',' typeSpecifier declorator?)*;
 
@@ -90,21 +91,71 @@ typeSpecifier
     | VOID
     ;
 
-// TODO comparison operators, prof. pref BNF and not EBNF (keep regex syntax in lexer)
-expr:   ID '(' exprList? ')'    # Call
-    |   expr '[' expr ']'       # Index
-    |   '-' expr                # Negate
-    |   '!' expr                # Not
-    |   expr '*' expr           # Mult
-    |   expr ('+'|'-') expr     # AddSub
-    |   expr '==' expr          # Equal
-    |   ID                      # Var
-    |   NUM                     # Int
-    |   '(' expr ')'            # Parens
-    ;
+// comparison operators, prof. pref BNF and not EBNF (keep regex syntax in lexer)
+//https://en.cppreference.com/w/c/language/expressions
+expr: oal;
+/* OPERACIONES ARITMETICO LOGICAS */
+oal: oplogica ;
+
+oplogica: prop or;
+
+or: '||' oplogica
+  |
+  ;
+
+prop: opcomp and ;
+
+and: '&&' opcomp and
+   |
+   ;
+
+opcomp: comp opigualdad;
+
+opigualdad
+  : '==' opcomp
+  | '!=' opcomp
+  |
+  ;
+
+comp: oparit oprela;
+
+oprela
+  : '>' oparit oprela
+  | '<' oparit oprela
+  | '<=' oparit oprela
+  | '>=' oparit oprela
+  |
+  ;
+
+oparit: term t;
+
+t : SUMA oparit
+  | RESTA oparit
+  |
+  ;
+
+term : factor f
+     ;
+
+f : MULT factor f
+  | DIV  factor f
+  |
+  ;
+
+factor : NUM                        #Int
+       | ID '=' expr                #SimpleAssignment
+       | ID                         #Var
+       | ID '(' exprList? ')'       #FnCall
+       | '(' oal ')'                #Paren
+       ;
+
 
 exprList : expr (',' expr)* ;
 
+SUMA   : '+' ;
+RESTA  : '-' ;
+MULT   : '*' ;
+DIV    : '/' ;
 
 COMMA: ',';
 PYC: ';';
@@ -121,4 +172,3 @@ ID : [a-zA-Z_] [a-zA-Z0-9_]* ;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 WS: [ \t\n\r]+ -> skip;
 OTRO: . ;
-
