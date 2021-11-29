@@ -6,7 +6,6 @@ instructions: inst+ ;
 
 inst
     :declarations
-    |statements
     |';'
     ;
 
@@ -17,6 +16,7 @@ statements
     | selectionStatements
     | iterationStatements
     | jumpStatements
+    | typeDeclaration
     ;
 
 jumpStatements
@@ -75,7 +75,7 @@ function
 
 functionDeclaration: typeSpecifier declorator '(' parameterTypeList? ')' ';';
 
-functionDefinition: typeSpecifier declorator '(' parameterList? ')' '{' statements '}';
+functionDefinition: typeSpecifier declorator '(' parameterList? ')' '{' statements* '}';
 
 parameterTypeList: typeSpecifier declorator? (',' typeSpecifier declorator?)*;
 
@@ -83,6 +83,7 @@ parameterList: typeSpecifier declorator (',' typeSpecifier declorator)*;
 
 
 declorator: ID;
+
 
 typeSpecifier
     : INT

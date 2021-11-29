@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "antlr-debug",
+            "request": "launch",
+            "name": "Debug Current Grammar",
+            "input": "input/decl-var.c",
+            "visualParseTree": true,
+            "startRule": "prog",
+            "grammar": "src/main/antlr4/com/example/compiladores.g4"
+        },
+        {
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",

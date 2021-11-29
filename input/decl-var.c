@@ -1,19 +1,17 @@
 /* */
 int x;
-double x = y;
-char a, b, c;
-int x = 5, y, z = x, w;
+
 
 void a(int);
-double c(double, int a, void);
+double c(double, int a);
 
 double c(double a,int b){
-/*return 0.0;*/
+return 0.0;
 }
 
 int main(){
-/*c(1.0,1.0);
-return 0;*/
+c(1.0,1.0);
+return 0;
 }
 
 /*int main(){

@@ -15,7 +15,7 @@ public class App {
         compiladoresParser parser = new compiladoresParser(tokens);
 
         @SuppressWarnings("unused")
-        ParseTree tree = parser.s();
+        ParseTree tree = parser.prog();
 
     }
 }
