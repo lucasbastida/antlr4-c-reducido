@@ -167,7 +167,14 @@ DOUBLE: 'double';
 CHAR: 'char';
 VOID: 'void';
 
-NUM :   [0-9]+ ;
+
+fragment NUMB: [0-9]+ ;
+
+NUM
+    : '-'? NUMB? '.' NUMB 
+    | '-'? NUMB
+    ;
+
 ID : [a-zA-Z_] [a-zA-Z0-9_]* ;
 
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
