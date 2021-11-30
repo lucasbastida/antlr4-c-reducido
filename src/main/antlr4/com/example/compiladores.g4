@@ -75,7 +75,7 @@ function
 
 functionDeclaration: typeSpecifier declorator '(' parameterTypeList? ')' ';';
 
-functionDefinition: typeSpecifier declorator '(' parameterList? ')' '{' statements* '}';
+functionDefinition: typeSpecifier declorator '(' parameterList? ')' statements;
 
 parameterTypeList: typeSpecifier declorator? (',' typeSpecifier declorator?)*;
 
