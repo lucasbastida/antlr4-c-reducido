@@ -94,62 +94,51 @@ typeSpecifier
 
 // comparison operators, prof. pref BNF and not EBNF (keep regex syntax in lexer)
 //https://en.cppreference.com/w/c/language/expressions
-expr: oal;
-/* OPERACIONES ARITMETICO LOGICAS */
-oal: oplogica ;
+//https://en.cppreference.com/w/c/language/operator_precedence
+expr: assigmentExpression;
 
-oplogica: prop or;
+assigmentExpression
+    : logicalOrExpression
+    | <assoc=right> ID '=' expr ;
 
-or: '||' oplogica
-  |
-  ;
+logicalOrExpression
+    : logicalAndExpression
+    | logicalOrExpression '||' logicalAndExpression;
 
-prop: opcomp and ;
+logicalAndExpression
+    : equalityExpression
+    | logicalAndExpression '&&' equalityExpression;
 
-and: '&&' opcomp and
-   |
-   ;
+equalityExpression
+    : relationalExpression
+    | equalityExpression '==' relationalExpression
+    | equalityExpression '!=' relationalExpression;
 
-opcomp: comp opigualdad;
+relationalExpression
+    : multiplicativeExpression
+    | relationalExpression '>' multiplicativeExpression
+    | relationalExpression '<' multiplicativeExpression
+    | relationalExpression '>=' multiplicativeExpression
+    | relationalExpression '<=' multiplicativeExpression;
 
-opigualdad
-  : '==' opcomp
-  | '!=' opcomp
-  |
-  ;
+multiplicativeExpression
+    : additiveExpression
+    | multiplicativeExpression '*' additiveExpression
+    | multiplicativeExpression '/' additiveExpression;
 
-comp: oparit oprela;
+additiveExpression
+    : funcionCallExpression
+    | additiveExpression '+' funcionCallExpression
+    | additiveExpression '-' funcionCallExpression;
 
-oprela
-  : '>' oparit oprela
-  | '<' oparit oprela
-  | '<=' oparit oprela
-  | '>=' oparit oprela
-  |
-  ;
+funcionCallExpression
+    : ID '(' exprList? ')'
+    | operands;
 
-oparit: term t;
-
-t : SUMA oparit
-  | RESTA oparit
-  |
-  ;
-
-term : factor f
-     ;
-
-f : MULT factor f
-  | DIV  factor f
-  |
-  ;
-
-factor : NUM                        #Int
-       | ID '=' expr                #SimpleAssignment
-       | ID                         #Var
-       | ID '(' exprList? ')'       #FnCall
-       | '(' oal ')'                #Paren
-       ;
-
+operands
+    : '(' expr ')'
+    | NUM
+    | ID;
 
 exprList : expr (',' expr)* ;
 

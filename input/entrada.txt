@@ -1,2 +1,5 @@
-probando 123 probando
-3 palabras
+int add()
+{
+    int x;
+    int y = x = 1 ;
+}
